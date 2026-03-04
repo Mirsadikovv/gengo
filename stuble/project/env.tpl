@@ -1,0 +1,19 @@
+HTTP_HOST=localhost
+HTTP_PORT=8080
+
+DB_HOST=localhost
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME={{ toSnake .ProjectName }}
+DB_PORT=5432
+DB_SSL_MODE=disable
+DB_TIME_ZONE=UTC
+
+JWT_SECRET=your_jwt_secret_here
+JWT_EXPIRED=3600
+JWT_REFRESH_EXPIRED=86400
+
+REDIS_ADDR=localhost:6379
+
+SWAGGER_USER=
+SWAGGER_PASSWORD=
