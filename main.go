@@ -11,6 +11,8 @@ import (
 	"github.com/Mirsadikovv/gengo/internal"
 )
 
+var reader = bufio.NewReader(os.Stdin)
+
 func main() {
 	if len(os.Args) < 2 {
 		log.Fatalln(errors.New("usage: gengo --new | --add"))
@@ -36,7 +38,6 @@ func main() {
 
 func promptInput(prompt string) string {
 	fmt.Print(prompt)
-	reader := bufio.NewReader(os.Stdin)
 	input, err := reader.ReadString('\n')
 	if err != nil {
 		fmt.Println("Error reading input:", err)
