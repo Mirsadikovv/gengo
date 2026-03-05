@@ -35,7 +35,7 @@ gengo --new
 Enter project name:  user_service
 Enter module name:   user
 Enter entity name:   user
-Enter mod path:      git.sriss.uz/myorg/user_service
+Enter mod path:      github.com/myorg/user_service
 ```
 
 Создаёт полную структуру проекта:
@@ -178,17 +178,37 @@ type UserService interface {
 
 ## shared_service
 
-`shared_service` входит в состав gengo и публикуется на GitHub вместе с ним.
-Сгенерированные проекты импортируют его напрямую как публичную зависимость:
+`shared_service` — встроенная библиотека gengo, публикуется вместе с ним на GitHub.
+Сгенерированные проекты импортируют её напрямую как публичную зависимость:
 
 ```go
 import "github.com/Mirsadikovv/gengo/shared_service/pg"
 import "github.com/Mirsadikovv/gengo/shared_service/request"
-// ...
+import "github.com/Mirsadikovv/gengo/shared_service/response"
+import "github.com/Mirsadikovv/gengo/shared_service/logger"
+import "github.com/Mirsadikovv/gengo/shared_service/middleware"
+import "github.com/Mirsadikovv/gengo/shared_service/jwt"
+import "github.com/Mirsadikovv/gengo/shared_service/redis"
 ```
 
 Никакой дополнительной настройки не требуется — `go mod tidy` подтянет зависимость
 из `github.com/Mirsadikovv/gengo` автоматически.
+
+### Пакеты shared_service
+
+| Пакет         | Описание                                          |
+|---------------|---------------------------------------------------|
+| `pg`          | GORM-хелперы: Create, Update, Delete, Page, Find  |
+| `request`     | HTTP-хелперы: BindBody, BindQuery, OK, NoContent  |
+| `response`    | Типы ответов: PageData[T], ID, Error              |
+| `logger`      | Интерфейс логгера                                 |
+| `middleware`  | AuthEchoMiddleware (JWT + GORM)                   |
+| `jwt`         | JWT сервис (access + refresh токены)              |
+| `redis`       | Redis клиент                                      |
+| `sharedutil`  | Env, Validator, утилиты                           |
+| `swagger`     | Basic Auth middleware для Swagger UI              |
+| `chromium`    | Генерация PDF через chromedp                      |
+| `parser`      | Парсер go.mod (version)                           |
 
 ---
 
@@ -198,31 +218,44 @@ import "github.com/Mirsadikovv/gengo/shared_service/request"
 gengo/
 ├── main.go                    # CLI: --new / --add
 ├── Makefile                   # install / install-local
+├── go.mod                     # module github.com/Mirsadikovv/gengo
 ├── internal/
 │   ├── new_project.go         # логика --new
 │   └── add_module.go          # логика --add
 ├── service/
-│   ├── util.go                # конвертация регистров
+│   ├── util.go                # конвертация регистров (toCamel, toSnake, ...)
 │   ├── folder.go              # создание директорий
 │   ├── file.go                # рендеринг шаблонов
-│   └── injector.go            # обновление src/main.go
-└── stuble/
-    ├── stuble.go              # go:embed
-    ├── module/                # шаблоны сущностей
-    │   ├── cmd.tpl
-    │   ├── dto.tpl
-    │   ├── model.tpl
-    │   ├── service.tpl
-    │   └── handler.tpl
-    ├── project/               # шаблоны корня проекта
-    │   ├── main_entry.tpl
-    │   ├── dev.tpl
-    │   ├── prod.tpl
-    │   ├── src_main.tpl
-    │   ├── env.tpl
-    │   ├── gitignore.tpl
-    │   └── makefile.tpl
-    └── auth/                  # bootstrap auth_service
-        ├── auth_dto.tpl
-        └── auth_middleware.tpl
+│   └── injector.go            # string-инъекция в src/main.go по маркерам
+├── stuble/
+│   ├── stuble.go              # go:embed декларации
+│   ├── module/                # шаблоны модуля/сущности
+│   │   ├── cmd.tpl
+│   │   ├── dto.tpl
+│   │   ├── model.tpl
+│   │   ├── service.tpl
+│   │   └── handler.tpl
+│   ├── project/               # шаблоны корня проекта
+│   │   ├── main_entry.tpl
+│   │   ├── dev.tpl
+│   │   ├── prod.tpl
+│   │   ├── src_main.tpl
+│   │   ├── env.tpl
+│   │   ├── gitignore.tpl
+│   │   └── makefile.tpl
+│   └── auth/                  # bootstrap auth_service
+│       ├── auth_dto.tpl
+│       └── auth_middleware.tpl
+└── shared_service/            # встроенная библиотека (часть модуля gengo)
+    ├── pg/                    # GORM-хелперы
+    ├── request/               # HTTP request/response хелперы
+    ├── response/              # типы ответов
+    ├── logger/                # интерфейс логгера
+    ├── middleware/            # auth middleware
+    ├── jwt/                   # JWT сервис
+    ├── redis/                 # Redis клиент
+    ├── sharedutil/            # env, validator, утилиты
+    ├── swagger/               # Swagger Basic Auth
+    ├── chromium/              # PDF генерация
+    └── parser/                # парсер версий
 ```
