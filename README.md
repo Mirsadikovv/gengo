@@ -176,21 +176,19 @@ type UserService interface {
 
 ---
 
-## Настройка приватного реестра
+## shared_service
 
-Зависимости подтягиваются из `git.sriss.uz`. Для работы `go mod tidy` нужно:
+`shared_service` входит в состав gengo и публикуется на GitHub вместе с ним.
+Сгенерированные проекты импортируют его напрямую как публичную зависимость:
 
-```bash
-go env -w GOPRIVATE=git.sriss.uz
-go env -w GONOSUMDB=git.sriss.uz
-go env -w GONOPROXY=git.sriss.uz
+```go
+import "github.com/Mirsadikovv/gengo/shared_service/pg"
+import "github.com/Mirsadikovv/gengo/shared_service/request"
+// ...
 ```
 
-Настройка git-доступа (HTTPS с токеном):
-
-```bash
-git config --global url."https://<LOGIN>:<TOKEN>@git.sriss.uz/".insteadOf "https://git.sriss.uz/"
-```
+Никакой дополнительной настройки не требуется — `go mod tidy` подтянет зависимость
+из `github.com/Mirsadikovv/gengo` автоматически.
 
 ---
 

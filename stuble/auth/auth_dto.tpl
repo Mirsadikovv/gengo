@@ -1,7 +1,7 @@
 package auth_dto
 
 import (
-	"git.sriss.uz/shared/shared_service/request"
+	"github.com/Mirsadikovv/gengo/shared_service/request"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )

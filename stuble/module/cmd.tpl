@@ -4,7 +4,7 @@ import (
 	auth_middleware "{{ .ModPath }}/src/module/auth_service/middleware"
 	{{ toSnake .EntityName }}_handler "{{ .ModPath }}/src/module/{{ toSnake .ModuleName }}/handler"
 
-	"git.sriss.uz/shared/shared_service/logger"
+	"github.com/Mirsadikovv/gengo/shared_service/logger"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )

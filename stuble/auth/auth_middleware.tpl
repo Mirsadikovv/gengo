@@ -3,7 +3,7 @@ package auth_middleware
 import (
 	auth_dto "{{ .ModPath }}/src/module/auth_service/dto"
 
-	"git.sriss.uz/shared/shared_service/middleware"
+	"github.com/Mirsadikovv/gengo/shared_service/middleware"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )

@@ -5,10 +5,10 @@ import (
 	{{ toSnake .EntityName }}_dto "{{ .ModPath }}/src/module/{{ toSnake .ModuleName }}/dto"
 	{{ toSnake .EntityName }}_service "{{ .ModPath }}/src/module/{{ toSnake .ModuleName }}/service"
 
-	"git.sriss.uz/shared/shared_service/logger"
-	"git.sriss.uz/shared/shared_service/request"
-	"git.sriss.uz/shared/shared_service/response"
-	"git.sriss.uz/shared/shared_service/sharedutil"
+	"github.com/Mirsadikovv/gengo/shared_service/logger"
+	"github.com/Mirsadikovv/gengo/shared_service/request"
+	"github.com/Mirsadikovv/gengo/shared_service/response"
+	"github.com/Mirsadikovv/gengo/shared_service/sharedutil"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )

@@ -6,8 +6,8 @@ import (
 	{{ toSnake .EntityName }}_dto "{{ .ModPath }}/src/module/{{ toSnake .ModuleName }}/dto"
 	{{ toSnake .EntityName }}_model "{{ .ModPath }}/src/module/{{ toSnake .ModuleName }}/model"
 
-	"git.sriss.uz/shared/shared_service/pg"
-	"git.sriss.uz/shared/shared_service/request"
+	"github.com/Mirsadikovv/gengo/shared_service/pg"
+	"github.com/Mirsadikovv/gengo/shared_service/request"
 	"gorm.io/gorm"
 )
 

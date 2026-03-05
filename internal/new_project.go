@@ -7,8 +7,8 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/fobus1289/ufa_shared/gengo/service"
-	"github.com/fobus1289/ufa_shared/gengo/stuble"
+	"github.com/Mirsadikovv/gengo/service"
+	"github.com/Mirsadikovv/gengo/stuble"
 	"github.com/iancoleman/strcase"
 )
 
@@ -27,20 +27,11 @@ func NewProject(projectName, moduleName, entityName, modPath string) {
 	// --- Root directory ---
 	mustMkdir(projectDir)
 
-	// Root main.go
 	mustRender(stuble.MainEntry, data, projectDir, "main.go")
-
-	// dev.go / prod.go
 	mustRender(stuble.Dev, data, projectDir, "dev.go")
 	mustRender(stuble.Prod, data, projectDir, "prod.go")
-
-	// .env.example
 	mustRender(stuble.Env, data, projectDir, ".env.example")
-
-	// .gitignore
 	mustRenderRaw(stuble.Gitignore, projectDir, ".gitignore")
-
-	// Makefile
 	mustRender(stuble.Makefile, data, projectDir, "Makefile")
 
 	// --- src/ ---
@@ -69,19 +60,10 @@ func NewProject(projectName, moduleName, entityName, modPath string) {
 		mustMkdir(d)
 	}
 
-	// cmd.go at module root
 	mustRender(stuble.Cmd, data, moduleDir, "cmd.go")
-
-	// dto
 	mustRender(stuble.Dto, data, dtoDir, entitySnake+"_dto.go")
-
-	// model
 	mustRender(stuble.Model, data, modelDir, entitySnake+"_model.go")
-
-	// handler
 	mustRender(stuble.Handler, data, handlerDir, entitySnake+"_handler.go")
-
-	// service
 	mustRender(stuble.Service, data, serviceDir, entitySnake+"_service.go")
 
 	// --- go mod init + tidy ---
@@ -127,7 +109,6 @@ func runCmd(dir string, name string, args ...string) {
 }
 
 func runGoimports(dir string) {
-	// Install goimports if not present (best effort)
 	installCmd := exec.Command("go", "install", "golang.org/x/tools/cmd/goimports@latest")
 	installCmd.Stdout = os.Stdout
 	installCmd.Stderr = os.Stderr

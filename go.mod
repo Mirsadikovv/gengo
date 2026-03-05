@@ -1,4 +1,4 @@
-module github.com/fobus1289/ufa_shared/gengo
+module github.com/Mirsadikovv/gengo
 
 go 1.21
 

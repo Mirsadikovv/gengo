@@ -1,7 +1,7 @@
 package {{ toSnake .EntityName }}_dto
 
 import (
-	"git.sriss.uz/shared/shared_service/response"
+	"github.com/Mirsadikovv/gengo/shared_service/response"
 	"time"
 )
 

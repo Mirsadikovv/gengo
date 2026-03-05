@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/fobus1289/ufa_shared/gengo/internal"
+	"github.com/Mirsadikovv/gengo/internal"
 )
 
 func main() {

@@ -8,15 +8,14 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/fobus1289/ufa_shared/gengo/service"
-	"github.com/fobus1289/ufa_shared/gengo/stuble"
+	"github.com/Mirsadikovv/gengo/service"
+	"github.com/Mirsadikovv/gengo/stuble"
 	"github.com/iancoleman/strcase"
 )
 
 // AddModule adds a new module with its first entity to an existing project.
 // It generates module files under src/module/{moduleName}/ and updates src/main.go.
 func AddModule(moduleName, entityName string) {
-	// Read mod path from go.mod
 	modPath, err := readModPath("go.mod")
 	if err != nil {
 		log.Fatalf("could not read go.mod: %v\nMake sure you run gengo --add from the project root directory.", err)
@@ -26,7 +25,7 @@ func AddModule(moduleName, entityName string) {
 	entitySnake := strcase.ToSnake(entityName)
 	entityCamel := strcase.ToCamel(entityName)
 
-	data := map[string]interface{}{
+	data := map[string]any{
 		"ModuleName": moduleName,
 		"EntityName": entityName,
 		"ModPath":    modPath,
@@ -45,27 +44,18 @@ func AddModule(moduleName, entityName string) {
 		}
 	}
 
-	// cmd.go at module root
 	if err := service.RenderToFile(stuble.Cmd, data, moduleDir, "cmd.go"); err != nil {
 		log.Fatalf("render cmd.go: %v", err)
 	}
-
-	// dto
 	if err := service.RenderToFile(stuble.Dto, data, dtoDir, entitySnake+"_dto.go"); err != nil {
 		log.Fatalf("render dto: %v", err)
 	}
-
-	// model
 	if err := service.RenderToFile(stuble.Model, data, modelDir, entitySnake+"_model.go"); err != nil {
 		log.Fatalf("render model: %v", err)
 	}
-
-	// handler
 	if err := service.RenderToFile(stuble.Handler, data, handlerDir, entitySnake+"_handler.go"); err != nil {
 		log.Fatalf("render handler: %v", err)
 	}
-
-	// service
 	if err := service.RenderToFile(stuble.Service, data, serviceDir, entitySnake+"_service.go"); err != nil {
 		log.Fatalf("render service: %v", err)
 	}
