@@ -96,10 +96,17 @@ func addImports(src string, imports ...string) string {
 		return src
 	}
 
-	// Build import lines with tab indent
-	newImports := make([]string, len(imports))
-	for i, imp := range imports {
-		newImports[i] = "\t" + imp
+	// Build import lines with tab indent, skip already present ones
+	existingBlock := strings.Join(lines[:importBlockEnd], "\n")
+	var newImports []string
+	for _, imp := range imports {
+		if !strings.Contains(existingBlock, imp) {
+			newImports = append(newImports, "\t"+imp)
+		}
+	}
+
+	if len(newImports) == 0 {
+		return src
 	}
 
 	updated := make([]string, 0, len(lines)+len(newImports))

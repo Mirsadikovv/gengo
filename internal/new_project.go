@@ -31,6 +31,7 @@ func NewProject(projectName, moduleName, entityName, modPath string) {
 	mustRender(stuble.Dev, data, projectDir, "dev.go")
 	mustRender(stuble.Prod, data, projectDir, "prod.go")
 	mustRender(stuble.Env, data, projectDir, ".env.example")
+	mustRender(stuble.Env, data, projectDir, ".env.dev")
 	mustRenderRaw(stuble.Gitignore, projectDir, ".gitignore")
 	mustRender(stuble.Makefile, data, projectDir, "Makefile")
 

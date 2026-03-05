@@ -68,7 +68,7 @@ func (h *{{ toLowerCamel .EntityName }}Handler) Create(ctx echo.Context) error {
 		}
 	}
 
-	return req.OK(response.NewID(id))
+	return req.Created(response.NewID(id))
 }
 
 // Update
